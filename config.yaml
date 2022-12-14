@@ -1,0 +1,83 @@
+hub: 
+  cookieSecret: "2c80123964734554ec91b4dc23eda0c0f974983c55eadfc36bad1755c74bde67" 
+  config: 
+    NativeAuthenticator:
+      admin_users:
+        - jurrian
+    JupyterHub:
+      authenticator_class: nativeauthenticator.NativeAuthenticator
+  resources:
+    requests:
+      cpu: 100m # 0m - 1000m
+      memory: 200Mi # 200Mi - 4Gi
+
+singleuser:
+  image:
+    name: jurrain/dddal_hub
+    tag: dev
+  storage:
+    capacity: 90Gi
+  extraContainers: 
+  - name: nodeodm
+    image: opendronemap/nodeodm
+    volumeMounts:
+    - name: volume-{username}
+      mountPath: /home/jovyan
+    resources:
+      limits:
+        cpu: 7.5
+        memory: 28G
+      requests: 
+        cpu: 0.4
+        memory: 1G
+  memory:
+    limit: 28G
+    guarantee: 1G
+  cpu:
+    limit: 7.5
+    guarantee: 0.4
+  startTimeout: 600
+
+scheduling:
+  userPods:
+    nodeAffinity:
+      matchNodePurpose: require
+  userScheduler: # user-scheduler pods (optional, running kubernetes/kube-scheduler)
+    resources:
+      requests:
+        cpu: 8m # 8m - 45m
+        memory: 100Mi # 100Mi - 1.5Gi
+  userPlaceholder: # user-placeholder pods (optional, running pause container)
+    # This is just an override of the resource requests that otherwise match
+    # those configured in singleuser.cpu|memory.guarantee|limit.
+    resources: {}
+proxy:
+  chp: # proxy pod, running jupyterhub/configurable-http-proxy
+    resources:
+      requests:
+        cpu: 100m # 0m - 1000m
+        memory: 100Mi # 100Mi - 600Mi
+  traefik: # autohttps pod (optional, running traefik/traefik)
+    resources:
+      requests:
+        cpu: 100m # 0m - 1000m
+        memory: 100Mi # 100Mi - 1.1Gi
+  secretSync: # autohttps pod (optional, sidecar container running small Python script)
+    resources:
+      requests:
+        cpu: 10m
+        memory: 64Mi
+
+prePuller: # hook|continuous-image-puller pods (optional, running pause container)
+  resources:
+    requests:
+      cpu: 10m
+      memory: 8Mi
+  hook: # hook-image-awaiter pod (optional, running GoLang binary defined in images/image-awaiter)
+    resources:
+      requests:
+        cpu: 10m
+        memory: 8Mi
+
+debug:
+  enabled: true

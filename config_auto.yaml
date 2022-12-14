@@ -1,0 +1,58 @@
+hub: 
+  cookieSecret: "28d34b5c4c86f08d710403df53acb63f76dbc31981772f34a00790e96c59e39e" 
+  config: 
+    NativeAuthenticator:
+      admin_users:
+        - jurrian
+    JupyterHub:
+      authenticator_class: nativeauthenticator.NativeAuthenticator
+  networkPolicy:
+    enabled: false
+
+singleuser:
+  image:
+    name: jurrain/drone-ml
+    tag: dev
+  storage:
+    capacity: 200Gi
+  extraContainers: 
+  - name: nodeodm
+    image: opendronemap/nodeodm
+    volumeMounts:
+    - name: volume-{username}
+      mountPath: /home/jovyan
+    resources:
+        ephemeral-storage: 20Gi
+  memory:
+    limit: 14G
+  cpu:
+    limit: 8
+  startTimeout: 600
+  cloudMetadata:
+      blockWithIptables: false
+  networkPolicy:
+    enabled: false 
+  extraResource:
+    limits: 
+      ephemeral-storage: 20Gi
+
+prePuller:
+  continuous: 
+    enabled: false
+  resources:
+    requests:
+      memory: 500Mi
+  hook:
+    enabled: false
+
+
+proxy:
+  chp:
+    networkPolicy:
+      enabled: false
+  traefik:
+    networkPolicy:
+      enabled: false
+
+debug:
+  enabled: true
