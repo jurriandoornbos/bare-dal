@@ -10,6 +10,10 @@ hub:
     requests:
       cpu: 100m # 0m - 1000m
       memory: 200Mi # 200Mi - 4Gi
+  db:
+    url: postgres+psycopg2://postgres:pgdb@pgdatabase-postgresql.pgdatabase.svc.cluster.local:5432/jhubdb
+    type: postgres
+    password: pgdb
 
 singleuser:
   image:
