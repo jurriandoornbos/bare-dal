@@ -6,6 +6,7 @@ https://georgepaw.medium.com/jupyterhub-with-kubernetes-on-single-bare-metal-ins
 https://github.com/rohinijoshi06/jupyterhub-on-k8s
 
 1. install docker + kubectl
+
 2. disable swap
 3. Initiate cluster with CIDR
 kubeadm init --pod-network-cidr=10.244.0.0/16
