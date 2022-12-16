@@ -5,37 +5,16 @@
 https://georgepaw.medium.com/jupyterhub-with-kubernetes-on-single-bare-metal-instance-tutorial-67cbd5ec0b00
 https://github.com/rohinijoshi06/jupyterhub-on-k8s
 
-1. install docker + kubectl
+0. isntall microk8s snap package
 
-2. disable swap
-3. Initiate cluster with CIDR
-kubeadm init --pod-network-cidr=10.244.0.0/16 (default microk8s 10.1.0.0/16)
-4. Set env 
-export KUBECONFIG=/etc/kubernetes/admin.conf
+1. setup microk8s nfs server
+https://microk8s.io/docs/nfs
 
-5. Set IP tables
-sysctl net.bridge.bridge-nf-call-iptables=1
-
-6. install Flannel
-kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
-
-7. CHeck what is all running:
-kubectl --namespace=kube-system get pods
-
-8. untaint nodes
-kubectl taint nodes --all node-role.kubernetes.io/master-
-
-9. install helm into default ns: kube-system
-curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
-kubectl --namespace kube-system create serviceaccount tiller
-kubectl create clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller
-
-helm init --service-account tiller --wait
-
-10. helm patch:
-kubectl patch deployment tiller-deploy --namespace=kube-system --type=json --patch='[{"op": "add", "path": "/spec/template/spec/containers/0/command", "value": ["/tiller", "--listen=localhost:44134"]}]'
+sudo mv /etc/exports /etc/exports.bak
+echo '/srv/nfs 10.0.0.0/24(rw,sync,no_subtree_check)' | sudo tee /etc/exports
 
 11. setup postgres db, setup NFS volume
+
 microk8s helm3 repo add kvaps https://kvaps.github.io/charts
 microk8s helm3 install my-nfs-server-provisioner kvaps/nfs-server-provisioner --version 1.4.0 --set=storageClass.
 defaultClass=true --set=persistence.enabled=true
