@@ -10,10 +10,7 @@ hub:
     requests:
       cpu: 100m # 0m - 1000m
       memory: 200Mi # 200Mi - 4Gi
-  db:
-    url: postgres+psycopg2://postgres:pgdb@pgdatabase-postgresql.pgdatabase.svc.cluster.local:5432/jhubdb
-    type: postgres
-    password: pgdb
+
 
 singleuser:
   image:
@@ -55,7 +52,10 @@ scheduling:
     # This is just an override of the resource requests that otherwise match
     # those configured in singleuser.cpu|memory.guarantee|limit.
     resources: {}
+    
 proxy:
+  service:
+    loadBalancerIP: 10.0.0.150
   secretToken: "5014d2745d9db9136a225f2243a80ce996e83eac3a99cd7a46475257bb8d1b46"
   chp: # proxy pod, running jupyterhub/configurable-http-proxy
     resources:
