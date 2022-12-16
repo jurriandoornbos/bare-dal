@@ -40,9 +40,6 @@ singleuser:
   startTimeout: 600
 
 scheduling:
-  userPods:
-    nodeAffinity:
-      matchNodePurpose: require
   userScheduler: # user-scheduler pods (optional, running kubernetes/kube-scheduler)
     resources:
       requests:
