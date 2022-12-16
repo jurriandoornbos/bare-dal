@@ -1,5 +1,5 @@
 hub: 
-  cookieSecret: "2c80123964734554ec91b4dc23eda0c0f974983c55eadfc36bad1755c74bde67" 
+  cookieSecret: "4eb84a3472e64f8da1c72d006b66e5e3572495254a755b7ece59f22042d80703" 
   config: 
     NativeAuthenticator:
       admin_users:
@@ -29,16 +29,16 @@ singleuser:
       mountPath: /home/jovyan
     resources:
       limits:
-        cpu: 7.5
-        memory: 28G
+        cpu: 7
+        memory: 7G
       requests: 
         cpu: 0.4
-        memory: 1G
+        memory: 7G
   memory:
-    limit: 28G
+    limit: 7G
     guarantee: 1G
   cpu:
-    limit: 7.5
+    limit: 7
     guarantee: 0.4
   startTimeout: 600
 
@@ -56,6 +56,7 @@ scheduling:
     # those configured in singleuser.cpu|memory.guarantee|limit.
     resources: {}
 proxy:
+  secretToken: "5014d2745d9db9136a225f2243a80ce996e83eac3a99cd7a46475257bb8d1b46"
   chp: # proxy pod, running jupyterhub/configurable-http-proxy
     resources:
       requests:
