@@ -5,16 +5,16 @@
 https://georgepaw.medium.com/jupyterhub-with-kubernetes-on-single-bare-metal-instance-tutorial-67cbd5ec0b00
 https://github.com/rohinijoshi06/jupyterhub-on-k8s
 
-0. isntall microk8s snap package
+0. Install microk8s snap
 
-13. install and change password
-microk8s helm3 upgrade --install pgdatabase --namespace pgdatabase bitnami/postgresql \
---create-namespace \
---set postgresqlPassword=pgdb \
---set postgresqlDatabase=jhubdb
+1. enable dns 
+2. enable openebs
+3. enable metallb
 
-14. check status of jhubdb
-kubectl --namespace pgdatabase get pods
+4. apply storage yaml
+
+5. apply metallb yaml
+
 
 15. install jhub
 

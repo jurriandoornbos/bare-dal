@@ -11,7 +11,6 @@ hub:
       cpu: 100m # 0m - 1000m
       memory: 200Mi # 200Mi - 4Gi
 
-
 singleuser:
   image:
     name: jurrain/dddal_hub
