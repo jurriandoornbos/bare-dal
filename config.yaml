@@ -30,7 +30,7 @@ singleuser:
         memory: 7G
       requests: 
         cpu: 0.4
-        memory: 7G
+        memory: 1G
   memory:
     limit: 7G
     guarantee: 1G

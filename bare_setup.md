@@ -26,7 +26,7 @@ kubectl --namespace pgdatabase get pods
 
 # setup the cluster using the helm chart
 
- helm upgrade --cleanup-on-fail \
+ microk8s helm upgrade --cleanup-on-fail \
   --install dal9000 jupyterhub/jupyterhub \
   --namespace dal9000 \
   --create-namespace \
@@ -34,7 +34,7 @@ kubectl --namespace pgdatabase get pods
   --values config.yaml
 
 
-kubectl --namespace jhub get pods
+kubectl --namespace dal9000 get pods
 
 16. check internal ip
 curl -i $(kubectl --namespace jhub get service | grep proxy-public | awk '{print $3}')
