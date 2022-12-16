@@ -9,7 +9,7 @@ https://github.com/rohinijoshi06/jupyterhub-on-k8s
 
 2. disable swap
 3. Initiate cluster with CIDR
-kubeadm init --pod-network-cidr=10.244.0.0/16
+kubeadm init --pod-network-cidr=10.244.0.0/16 (default microk8s 10.1.0.0/16)
 4. Set env 
 export KUBECONFIG=/etc/kubernetes/admin.conf
 
@@ -36,7 +36,10 @@ helm init --service-account tiller --wait
 kubectl patch deployment tiller-deploy --namespace=kube-system --type=json --patch='[{"op": "add", "path": "/spec/template/spec/containers/0/command", "value": ["/tiller", "--listen=localhost:44134"]}]'
 
 11. setup postgres db, setup NFS volume
-helm install stable/nfs-server-provisioner --namespace nfsprovisioner --set=storageClass.defaultClass=true
+microk8s helm3 repo add kvaps https://kvaps.github.io/charts
+microk8s helm3 install my-nfs-server-provisioner kvaps/nfs-server-provisioner --version 1.4.0 --set=storageClass.
+defaultClass=true --set=persistence.enabled=true
+
 
 12. install bitnami postgres
 helm repo add bitnami https://charts.bitnami.com/bitnami
@@ -44,6 +47,7 @@ helm repo update
 
 13. install and change password
 helm upgrade --install pgdatabase --namespace pgdatabase bitnami/postgresql \
+--create-namespace \
 --set postgresqlPassword=pgdb \
 --set postgresqlDatabase=jhubdb
 
@@ -56,6 +60,8 @@ kubectl --namespace pgdatabase get pods
  helm repo add jupyterhub https://jupyterhub.github.io/helm-chart/
  helm repo update
 
+
+
 # setup the cluster using the helm chart
 
  helm upgrade --cleanup-on-fail \
@@ -65,13 +71,6 @@ kubectl --namespace pgdatabase get pods
   --version=2.0.0 \
   --values config.yaml
 
-#create random ssl hex
-
- openssl rand -hex 32
-2c80123964734554ec91b4dc23eda0c0f974983c55eadfc36bad1755c74bde67
-
-#twice
-28d34b5c4c86f08d710403df53acb63f76dbc31981772f34a00790e96c59e39e
 
 kubectl --namespace jhub get pods
 
