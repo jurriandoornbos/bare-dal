@@ -16,8 +16,7 @@ echo '/srv/nfs 10.0.0.0/24(rw,sync,no_subtree_check)' | sudo tee /etc/exports
 11. setup postgres db, setup NFS volume
 
 microk8s helm3 repo add kvaps https://kvaps.github.io/charts
-microk8s helm3 install my-nfs-server-provisioner kvaps/nfs-server-provisioner --version 1.4.0 --set=storageClass.
-defaultClass=true --set=persistence.enabled=true
+microk8s helm3 install my-nfs-server-provisioner kvaps/nfs-server-provisioner --version 1.4.0 --set=storageClass.defaultClass=true --set=persistence.enabled=true
 
 
 12. install bitnami postgres
@@ -25,7 +24,7 @@ helm repo add bitnami https://charts.bitnami.com/bitnami
 helm repo update
 
 13. install and change password
-helm upgrade --install pgdatabase --namespace pgdatabase bitnami/postgresql \
+microk8s helm3 upgrade --install pgdatabase --namespace pgdatabase bitnami/postgresql \
 --create-namespace \
 --set postgresqlPassword=pgdb \
 --set postgresqlDatabase=jhubdb

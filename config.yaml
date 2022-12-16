@@ -20,7 +20,6 @@ singleuser:
     name: jurrain/dddal_hub
     tag: dev
   storage:
-    type: none 
     capacity: 90Gi
   extraContainers: 
   - name: nodeodm
