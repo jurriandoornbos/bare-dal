@@ -85,4 +85,4 @@ prePuller: # hook|continuous-image-puller pods (optional, running pause containe
         memory: 8Mi
 
 debug:
-  enabled: truemicrok98s
+  enabled: true
