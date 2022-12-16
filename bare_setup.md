@@ -7,22 +7,6 @@ https://github.com/rohinijoshi06/jupyterhub-on-k8s
 
 0. isntall microk8s snap package
 
-1. setup microk8s nfs server
-https://microk8s.io/docs/nfs
-
-sudo mv /etc/exports /etc/exports.bak
-echo '/srv/nfs 10.0.0.0/24(rw,sync,no_subtree_check)' | sudo tee /etc/exports
-
-11. setup postgres db, setup NFS volume
-
-microk8s helm3 repo add kvaps https://kvaps.github.io/charts
-microk8s helm3 install my-nfs-server-provisioner kvaps/nfs-server-provisioner --version 1.4.0 --set=storageClass.defaultClass=true --set=persistence.enabled=true
-
-
-12. install bitnami postgres
-helm repo add bitnami https://charts.bitnami.com/bitnami
-helm repo update
-
 13. install and change password
 microk8s helm3 upgrade --install pgdatabase --namespace pgdatabase bitnami/postgresql \
 --create-namespace \
