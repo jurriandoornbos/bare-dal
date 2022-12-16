@@ -13,7 +13,7 @@ hub:
 
 singleuser:
   image:
-    name: jurrain/dddal_hub
+    name: jurrain/ddal_hub
     tag: dev
   storage:
     capacity: 90Gi
