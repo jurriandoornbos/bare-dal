@@ -16,7 +16,7 @@ singleuser:
     name: jurrain/ddal_hub
     tag: dev
   storage:
-    capacity: 90Gi
+    capacity: 100Gi
   extraContainers: 
   - name: nodeodm
     image: opendronemap/nodeodm
@@ -25,16 +25,16 @@ singleuser:
       mountPath: /home/jovyan
     resources:
       limits:
-        cpu: 7
-        memory: 7G
+        cpu: 32
+        memory: 50G
       requests: 
         cpu: 0.4
         memory: 1G
   memory:
-    limit: 7G
+    limit: 50G
     guarantee: 1G
   cpu:
-    limit: 7
+    limit: 32
     guarantee: 0.4
   startTimeout: 600
 
@@ -51,7 +51,7 @@ scheduling:
 
 proxy:
   service:
-    loadBalancerIP: 192.168.2.130
+    loadBalancerIP: 192.168.2.201
   secretToken: "5014d2745d9db9136a225f2243a80ce996e83eac3a99cd7a46475257bb8d1b46"
   chp: # proxy pod, running jupyterhub/configurable-http-proxy
     resources:

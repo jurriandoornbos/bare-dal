@@ -6,6 +6,8 @@ https://georgepaw.medium.com/jupyterhub-with-kubernetes-on-single-bare-metal-ins
 https://github.com/rohinijoshi06/jupyterhub-on-k8s
 
 0. Install microk8s snap
+https://microk8s.io/docs/getting-started
+
 
 1. enable dns 
 2. enable openebs

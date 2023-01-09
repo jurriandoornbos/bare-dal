@@ -10,7 +10,7 @@ metadata:
       - name: StorageType
         value: hostpath
       - name: BasePath
-        value: /srv/nfs
+        value: /kube/nfs
 provisioner: openebs.io/local
 reclaimPolicy: Delete
 volumeBindingMode: WaitForFirstConsumer
